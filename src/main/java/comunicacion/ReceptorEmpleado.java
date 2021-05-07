@@ -3,6 +3,7 @@ package comunicacion;
 import modeloPaqueteInfo.IPaquete;
 import modeloPaqueteInfo.PaqueteNuevoCliente;
 
+import javax.naming.spi.ObjectFactoryBuilder;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
@@ -31,7 +32,8 @@ public class ReceptorEmpleado implements Runnable{
             socket=ss.accept();
             System.out.println("Client connected");
             while (true){
-                IPaquete paquete= (IPaquete) new ObjectInputStream(socket.getInputStream());
+                ObjectInputStream ois=new ObjectInputStream(socket.getInputStream());
+                IPaquete paquete= (IPaquete) ois.readObject();
                 if (paquete.getIdOperacion()==1){// es un mensaje del Empleado que llama al proximo cliente (PaqueteProxCliente)
                     Emisor.getInstance().enviarPaquete(paquete,3);// se lo envio al monitor
                     //
@@ -47,7 +49,7 @@ public class ReceptorEmpleado implements Runnable{
                     //
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 

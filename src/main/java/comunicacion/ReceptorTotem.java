@@ -30,11 +30,12 @@ public class ReceptorTotem implements Runnable{
             socket=ss.accept();
             System.out.println("Client connected");
             while (true){
-                IPaquete paquete= (IPaquete) new ObjectInputStream(socket.getInputStream());
+                ObjectInputStream ois= new ObjectInputStream(socket.getInputStream());
+                IPaquete paquete= (IPaquete) ois.readObject();
                 //el unico paquete que recibo del totem es el PaqueteNuevoCliente
                 Emisor.getInstance().enviarPaquete(paquete,1);// se lo envio al empleado
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
