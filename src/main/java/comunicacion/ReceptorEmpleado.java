@@ -1,9 +1,7 @@
 package comunicacion;
 
 import modeloPaqueteInfo.IPaquete;
-import modeloPaqueteInfo.PaqueteNuevoCliente;
 
-import javax.naming.spi.ObjectFactoryBuilder;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
