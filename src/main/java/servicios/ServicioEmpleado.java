@@ -7,9 +7,7 @@ import repositorio.Repositorio;
 public class ServicioEmpleado {
 
     public void combinaBoxYCliente(InfoBoxDisponible paquete) {
-        int dni=(int) Repositorio.getInstance().getColaClientes().poll();
-        InfoClienteAtendido clienteAtendido= FactoryInfoClienteAtendido.getInfoClienteAtendido(dni,paquete.getBox());
-        Repositorio.getInstance().getPilaClientesAtendidos().add(clienteAtendido);
+        Repositorio.getInstance().agregaBox(paquete);
     }
 
     public void tiempoAtencion(InfoTiempoAtencion paquete) {
@@ -33,9 +31,6 @@ public class ServicioEmpleado {
     }
 
     public Informable proximoCliente() {
-        int dni=-1;
-        if (!Repositorio.getInstance().getColaClientes().isEmpty())
-            dni=(int) Repositorio.getInstance().getColaClientes().peek();
-        return FactoryInfoCliente.getPaqueteNuevoCliente(dni);
+        return Repositorio.getInstance().getProximoCliente();
     }
 }

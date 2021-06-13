@@ -1,6 +1,7 @@
 package prueba;
 
 import controlador.*;
+import repositorio.Repositorio;
 import servicios.ServicioEmpleado;
 import servicios.ServicioMonitor;
 import servicios.ServicioTotem;
@@ -8,6 +9,24 @@ import servicios.ServicioTotem;
 public class Prueba {
 
     public static void main(String[] args) {
+        if (args.length!=0){
+            if (args[0].equals("categoria")) {
+                Repositorio.getInstance().establecerEstrategiaPorCategoria();
+                System.out.println("ESTRATEGIA: por categoria");
+            }
+            else if (args[0].equals("dnicreciente")){
+                Repositorio.getInstance().establecerEstrategiaPorDniCreciente();
+                System.out.println("ESTRATEGIA: por DNI creciente");
+            }
+            else if (args[0].equals("dnidecreciente")){
+                Repositorio.getInstance().establecerEstrategiaPorDniDecreciente();
+                System.out.println("ESTRATEGIA: por DNI decreciente");
+            }
+            else System.out.println("ERROR DE PARAMETRO: estrategia no definida");
+        } else {
+            Repositorio.getInstance().establecerEstrategiaFIFO();
+            System.out.println("ESTRATEGIA: por orden de llegada");
+        }
         ControllerDNS controllerDNS=new ControllerDNS();
         ControllerServerSecu controllerServerSecu=new ControllerServerSecu();
         ServicioEmpleado servicioEmpleado=new ServicioEmpleado();

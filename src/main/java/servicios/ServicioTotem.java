@@ -9,7 +9,7 @@ import java.util.LinkedList;
 public class ServicioTotem {
 
     public void nuevoCliente(InfoCliente paquete) {
-        Repositorio.getInstance().getColaClientes().add(((InfoCliente)paquete).getDni());
+        Repositorio.getInstance().agregaNuevoCliente(paquete);
     }
 
     public InfoTiempoAtencion recuperaTiempoAtencionPromedio() {
