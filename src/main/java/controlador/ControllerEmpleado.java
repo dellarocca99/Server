@@ -1,6 +1,10 @@
 package controlador;
 
+import modeloInfo.FactoryInfoClienteAtendido;
 import modeloInfo.InfoBoxDisponible;
+import modeloInfo.InfoCliente;
+import modeloInfo.InfoClienteAtendido;
+import modeloInfo.InfoInicioAtencion;
 import modeloInfo.Informable;
 import modeloInfo.InfoTiempoAtencion;
 import servicios.ServicioEmpleado;
@@ -30,13 +34,20 @@ public class ControllerEmpleado implements Runnable{
                 System.out.println("Empleado connected");
                 ObjectInputStream ois=new ObjectInputStream(socket.getInputStream());
                 Informable paquete= (Informable) ois.readObject();
-                if (paquete.getIdOperacion()==1){// es un mensaje del Empleado que llama al proximo cliente (InfoBoxDisponible)
-                    this.emiteMensaje(this.servicio.proximoCliente());
-                    this.servicio.combinaBoxYCliente((InfoBoxDisponible)paquete);
-                } else if (paquete.getIdOperacion()==2){// es un mensaje del Empleado que notifica la duración de la última atención (InfoTiempoAtencion)
-                    this.servicio.tiempoAtencion((InfoTiempoAtencion)paquete);
-                } else if (paquete.getIdOperacion()==3){// es un mensaje del Empleado que pregunta si hay nuevos clientes en espera (InfoPeticion)
-                    this.emiteMensaje(this.servicio.recuperaNuevosClientes());
+                switch(paquete.getIdOperacion()) {
+                    case 1:// es un mensaje del Empleado que llama al proximo cliente (InfoBoxDisponible)
+                        this.emiteMensaje(this.servicio.proximoCliente());
+                        this.servicio.combinaBoxYCliente((InfoBoxDisponible)paquete);
+                        break;
+                    case 2:// es un mensaje del Empleado que notifica la duración de la última atención (InfoTiempoAtencion)
+                        this.servicio.tiempoAtencion((InfoTiempoAtencion)paquete);
+                        break;
+                    case 3:// es un mensaje del Empleado que pregunta si hay nuevos clientes en espera (InfoPeticion)
+                        this.emiteMensaje(this.servicio.recuperaNuevosClientes());
+                        break;
+                    case 4:// es un mensaje del Empleado que notifica el inicio de la atencion.
+                        this.servicio.agregaTiempoInicioAtencion((InfoInicioAtencion)paquete);
+                        break;
                 }
                 socket.close();
             }

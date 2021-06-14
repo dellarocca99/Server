@@ -21,8 +21,11 @@ public class EstrategiaPorDniDecreciente extends EstrategiaProxCliente{
                 return false;
             }
         };
+        /*return this.colaClientes.stream().min(Comparator.comparing(QueueClient::getDni)).orElse(null);*/
 
-        return this.colaClientes.stream().
-                max(comparador).get();
+        InfoCliente infoCliente=this.colaClientes.stream().
+                max(comparador).orElse(null);
+        this.colaClientes.remove(infoCliente);
+        return infoCliente;
     }
 }

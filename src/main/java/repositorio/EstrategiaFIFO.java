@@ -18,7 +18,9 @@ public class EstrategiaFIFO extends EstrategiaProxCliente{
                 return false;
             }
         };
-        return this.colaClientes.stream().
-                min(comparador).get();
+        InfoCliente infoCliente=this.colaClientes.stream().
+                min(comparador).orElse(null);
+        this.colaClientes.remove(infoCliente);
+        return infoCliente;
     }
 }

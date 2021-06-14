@@ -1,6 +1,10 @@
 package prueba;
 
 import controlador.*;
+import persistencia.Buscador;
+import persistencia.FactoryBuscador;
+import persistencia.FactoryPersistencia;
+import persistencia.Persistor;
 import repositorio.Repositorio;
 import servicios.ServicioEmpleado;
 import servicios.ServicioMonitor;
@@ -9,16 +13,20 @@ import servicios.ServicioTotem;
 public class Prueba {
 
     public static void main(String[] args) {
-        if (args.length!=0){
-            if (args[0].equals("categoria")) {
+        Buscador buscador= FactoryBuscador.getInstance(args[0]);
+        Persistor persistor= FactoryPersistencia.getInstance(args[1]);
+        Repositorio.getInstance().setBuscador(buscador);
+        Repositorio.getInstance().setPersistor(persistor);
+        if (args.length==3){
+            if (args[2].equals("categoria")) {
                 Repositorio.getInstance().establecerEstrategiaPorCategoria();
                 System.out.println("ESTRATEGIA: por categoria");
             }
-            else if (args[0].equals("dnicreciente")){
+            else if (args[2].equals("dnicreciente")){
                 Repositorio.getInstance().establecerEstrategiaPorDniCreciente();
                 System.out.println("ESTRATEGIA: por DNI creciente");
             }
-            else if (args[0].equals("dnidecreciente")){
+            else if (args[2].equals("dnidecreciente")){
                 Repositorio.getInstance().establecerEstrategiaPorDniDecreciente();
                 System.out.println("ESTRATEGIA: por DNI decreciente");
             }

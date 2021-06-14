@@ -4,8 +4,6 @@ import modeloInfo.InfoCliente;
 import modeloInfo.InfoTiempoAtencion;
 import repositorio.Repositorio;
 
-import java.util.LinkedList;
-
 public class ServicioTotem {
 
     public void nuevoCliente(InfoCliente paquete) {

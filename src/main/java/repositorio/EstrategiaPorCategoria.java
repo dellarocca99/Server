@@ -15,7 +15,7 @@ public class EstrategiaPorCategoria extends EstrategiaProxCliente{
             try {
                 categoria++;
                 ok=true;
-                int finalCategoria = categoria;
+                int finalCategoria=categoria;
                 Predicate<InfoCliente> predicado = new Predicate<InfoCliente>() {
                     @Override
                     public boolean test(InfoCliente infoCliente) {
@@ -23,11 +23,12 @@ public class EstrategiaPorCategoria extends EstrategiaProxCliente{
                     }
                 };
                 infoCliente = this.colaClientes.stream()
-                        .filter(predicado).findFirst().get();
+                        .filter(predicado).findFirst().orElse(null);
             } catch (NoSuchElementException e) {
                 ok=false;
             }
         }while (ok==false);
+        this.colaClientes.remove(infoCliente);
         return infoCliente;
     }
 }
